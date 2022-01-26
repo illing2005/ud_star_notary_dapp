@@ -79,22 +79,40 @@ it("lets user2 buy a star and decreases its balance in ether", async () => {
 it("can add the star name and star symbol properly", async () => {
   // 1. create a Star with different tokenId
   //2. Call the name and symbol properties in your Smart Contract and compare with the name and symbol provided
+  assert.equal(0, 1);
 });
 
 it("lets 2 users exchange stars", async () => {
   // 1. create 2 Stars with different tokenId
   // 2. Call the exchangeStars functions implemented in the Smart Contract
   // 3. Verify that the owners changed
+  assert.equal(0, 1);
 });
 
 it("lets a user transfer a star", async () => {
   // 1. create a Star with different tokenId
   // 2. use the transferStar function implemented in the Smart Contract
   // 3. Verify the star owner changed.
+  assert.equal(0, 1);
 });
 
 it("lookUptokenIdToStarInfo test", async () => {
   // 1. create a Star with different tokenId
   // 2. Call your method lookUptokenIdToStarInfo
   // 3. Verify if you Star name is the same
+  const tokenId = 6;
+  const starName = "Przybylski's Star";
+  const instance = await StarNotary.deployed();
+  await instance.createStar(starName, tokenId, { from: accounts[0] });
+  assert.equal(await instance.lookUptokenIdToStarInfo(tokenId), starName);
+});
+
+it("tokens have name and symbol", async () => {
+  const instance = await StarNotary.deployed();
+
+  const name = await instance.name.call();
+  assert.equal(name, "Udacity Star Token");
+
+  const symbol = await instance.symbol.call();
+  assert.equal(symbol, "UST");
 });
