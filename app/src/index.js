@@ -11,11 +11,8 @@ const App = {
 
     try {
       // get contract instance
-      console.log(web3.eth);
       const networkId = await web3.eth.net.getId();
-      console.log(networkId);
       const deployedNetwork = starNotaryArtifact.networks[networkId];
-      console.log(deployedNetwork);
       this.meta = new web3.eth.Contract(
         starNotaryArtifact.abi,
         deployedNetwork.address
@@ -23,10 +20,8 @@ const App = {
 
       // get accounts
       const accounts = await web3.eth.getAccounts();
-      console.log(accounts);
       this.account = accounts[0];
     } catch (error) {
-      console.log(error);
       console.error("Could not connect to contract or chain.");
     }
   },
@@ -45,7 +40,12 @@ const App = {
   },
 
   // Implement Task 4 Modify the front end of the DAPP
-  lookUp: async function () {},
+  lookUp: async function () {
+    const starId = document.getElementById("lookid").value;
+    const { lookUptokenIdToStarInfo } = this.meta.methods;
+    const starName = await lookUptokenIdToStarInfo(starId).call({from: this.account});
+    App.setStatus(`Name of Star with ${starId} is ${starName}`);
+  },
 };
 
 window.App = App;
