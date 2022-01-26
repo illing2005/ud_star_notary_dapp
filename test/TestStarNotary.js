@@ -96,11 +96,15 @@ it("lets 2 users exchange stars", async () => {
   assert.equal(newOwnerOf8, accounts[0]);
 });
 
-// it("lets a user transfer a star", async () => {
-//   // 1. create a Star with different tokenId
-//   // 2. use the transferStar function implemented in the Smart Contract
-//   // 3. Verify the star owner changed.
-// });
+it("lets a user transfer a star", async () => {
+  // 1. create a Star with different tokenId
+  const instance = await StarNotary.deployed();
+  const newOwner = accounts[1];
+  await instance.createStar("Transferable Star", 9, { from: accounts[0] });
+  await instance.transferStar(accounts[1], 9, { from: accounts[0] });
+
+  assert.equal(await instance.ownerOf(9), newOwner);
+});
 
 it("lookUptokenIdToStarInfo test", async () => {
   // 1. create a Star with different tokenId
