@@ -18,3 +18,5 @@ yarn-error.log*
 
 node_modules
 .idea
+.secret
+.infura
