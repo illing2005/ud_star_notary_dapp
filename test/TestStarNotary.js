@@ -76,22 +76,24 @@ it("lets user2 buy a star and decreases its balance in ether", async () => {
 
 // Implement Task 2 Add supporting unit tests
 
-// it("can add the star name and star symbol properly", async () => {
-//   // 1. create a Star with different tokenId
-//   //2. Call the name and symbol properties in your Smart Contract and compare with the name and symbol provided
-// });
+it("can add the star name and star symbol properly", async () => {
+  const instance = await StarNotary.deployed();
+  const name = await instance.name.call();
+  assert.equal(name, "Udacity Star Token");
+  const symbol = await instance.symbol.call();
+  assert.equal(symbol, "UST");
+});
 
 it("lets 2 users exchange stars", async () => {
   const instance = await StarNotary.deployed();
   await instance.createStar("Star Owner 1", 7, { from: accounts[0] });
   await instance.createStar("Star Owner 2", 8, { from: accounts[1] });
-  await instance.exchangeStars(7, 8, {from: accounts[0]});
+  await instance.exchangeStars(7, 8, { from: accounts[0] });
 
   const newOwnerOf7 = await instance.ownerOf(7);
   assert.equal(newOwnerOf7, accounts[1]);
   const newOwnerOf8 = await instance.ownerOf(8);
   assert.equal(newOwnerOf8, accounts[0]);
-
 });
 
 // it("lets a user transfer a star", async () => {
@@ -111,12 +113,3 @@ it("lookUptokenIdToStarInfo test", async () => {
   assert.equal(await instance.lookUptokenIdToStarInfo(tokenId), starName);
 });
 
-it("tokens have name and symbol", async () => {
-  const instance = await StarNotary.deployed();
-
-  const name = await instance.name.call();
-  assert.equal(name, "Udacity Star Token");
-
-  const symbol = await instance.symbol.call();
-  assert.equal(symbol, "UST");
-});

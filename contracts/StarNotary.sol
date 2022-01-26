@@ -1,10 +1,9 @@
 pragma solidity >=0.4.24;
 
-//Importing openzeppelin-solidity ERC-721 implemented Standard
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
 
 // StarNotary Contract declaration inheritance the ERC721 openzeppelin implementation
-contract StarNotary is ERC721 {
+contract StarNotary is ERC721Full {
 
     // Star data
     struct Star {
@@ -14,8 +13,13 @@ contract StarNotary is ERC721 {
     // Implement Task 1 Add a name and symbol properties
     // name: Is a short name to your token
     // symbol: Is a short string like 'USD' -> 'American Dollar'
-    string public constant name = "Udacity Star Token";
-    string public constant symbol = "UST";
+    // First way to implement name and symbol:
+    // string public constant name = "Udacity Star Token";
+    // string public constant symbol = "UST";
+
+    //  Second way  to implement name and symbol
+    //  Note: We could also add _name, _symbol as variables and add set them during the contract deployment
+    constructor() public ERC721Full("Udacity Star Token", "UST") {}
 
 
     // mapping the Star with the Owner Address
